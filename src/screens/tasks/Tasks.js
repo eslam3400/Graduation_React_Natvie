@@ -5,10 +5,10 @@ import ContainerWithNavBar from '../../components/ContainerWithNavBar';
 import TaskCard from '../../components/TaskCard';
 
 const tasks = [
-  { name: "Task 1", description: "Description 1" },
-  { name: "Task 2", description: "Description 2" },
-  { name: "Task 3", description: "Description 3" },
-  { name: "Test Task", description: "Description Description Description Description asdsad" },
+  { id: 1, name: "Task 1", description: "Description 1" },
+  { id: 2, name: "Task 2", description: "Description 2" },
+  { id: 3, name: "Task 3", description: "Description 3" },
+  { id: 4, name: "Test Task", description: "Description Description Description Description asdsad" },
 ]
 
 const Tasks = () => {
@@ -20,7 +20,7 @@ const Tasks = () => {
           <Icon name="plus" size={25} />
         </View>
         <View>
-          {tasks.map(e => <TaskCard name={e.name} description={e.description} />)}
+          {tasks.map(e => <TaskCard key={e.id} name={e.name} description={e.description} />)}
         </View>
       </View>
     </ContainerWithNavBar>
