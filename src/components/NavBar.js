@@ -6,7 +6,7 @@ const NavBar = () => {
   return (
     <View style={styles.navBar}>
       <View style={styles.navBarElement}><Icon name="sitemap" size={25} /></View>
-      <View style={styles.centerNavBarElement}><Icon name="home" size={30} /></View>
+      <View style={[styles.navBarElement, styles.centerNavBarElement]}><Icon name="home" size={30} /></View>
       <View style={styles.navBarElement}><Icon name="tasks" size={25} /></View>
     </View>
   )
@@ -26,9 +26,8 @@ const styles = StyleSheet.create({
   centerNavBarElement: {
     backgroundColor: "white",
     width: `18%`,
-    alignItems: "center",
-    justifyContent: "center",
     borderRadius: 50,
+    bottom: 15,
   }
 })
 
