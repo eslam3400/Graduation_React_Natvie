@@ -1,13 +1,9 @@
 import React from 'react';
-import Devices from './src/screens/devices/Devices';
-import Home from './src/screens/home/Home';
-import Tasks from './src/screens/tasks/Tasks';
+import ChipDetails from './src/screens/ChipDetails';
 
 const App = () => {
   return (
-    // <Home />
-    // <Tasks />
-    <Devices />
+    <ChipDetails />
   );
 };
 
