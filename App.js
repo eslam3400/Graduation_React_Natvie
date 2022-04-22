@@ -4,7 +4,7 @@ import Profile from './screens/Profile';
 
 export default function App() {
   return (
-    <Login />
-    // <Signup />
+    // <Login />
+    <Signup />
   );
 }

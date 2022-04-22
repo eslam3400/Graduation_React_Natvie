@@ -1,14 +1,29 @@
 import React from 'react'
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Button, Pressable, StyleSheet } from 'react-native'
+import RadioGroup from 'react-native-radio-buttons-group'
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Api from '../../Api'
 
+const genderRadioButtons = [{
+  id: '1',
+  label: 'Male',
+  value: 'Male',
+  selected: true
+}, {
+  id: '2',
+  label: 'Female',
+  value: 'Female'
+}]
+
 function Signup() {
-  const [email, onEmailChange] = React.useState("")
-  const [name, onNameChange] = React.useState("")
-  const [password, onPasswordChange] = React.useState("")
-  const [phone, onPhoneChange] = React.useState(null)
-  const [gender, onGenderChange] = React.useState("")
-  const [date_of_birth, onDOBChange] = React.useState("")
+  const [email, setEmail] = React.useState(``)
+  const [name, setName] = React.useState(``)
+  const [password, setPassword] = React.useState(``)
+  const [phone, setPhone] = React.useState(null)
+  const [genderRadio, setGenderRadio] = React.useState(genderRadioButtons)
+  const [gender, setGender] = React.useState(`Male`)
+  const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
+  const [date_of_birth, setDOB] = React.useState(``)
 
   const signup = async () => {
     const response = await Api.signup({ email, name, password, phone, gender, date_of_birth })
@@ -20,16 +35,37 @@ function Signup() {
     }
   }
 
+  function genderSelect(radioButtonsArray) {
+    setGenderRadio(radioButtonsArray)
+    setGender(radioButtonsArray[0].selected ? `Male` : `Female`);
+  }
+
+  const handleConfirm = (date) => {
+    setDOB(date.toLocaleDateString())
+    setDatePickerVisibility(false);
+  };
+
   return (
     <View style={style.container}>
       <Text style={style.header}>Signup</Text>
       <View style={style.form}>
-        <TextInput style={style.input} onChangeText={onEmailChange} autoCapitalize='none' autoComplete='email' placeholder="Email" />
-        <TextInput style={style.input} onChangeText={onNameChange} autoCapitalize='words' autoComplete='name' placeholder="Name" />
-        <TextInput style={style.input} onChangeText={onPasswordChange} autoCapitalize='none' autoComplete='password' secureTextEntry={true} placeholder="Password" />
-        <TextInput style={style.input} onChangeText={onPhoneChange} autoComplete='tel' keyboardType="numeric" placeholder="Phone" />
-        <TextInput style={style.input} onChangeText={onGenderChange} autoComplete='gender' placeholder="Gender" />
-        <TextInput style={style.input} onChangeText={onDOBChange} autoComplete='birthdate-full' placeholder="Date Of Birth" />
+        <TextInput style={style.input} onChangeText={setEmail} autoCapitalize='none' autoComplete='email' placeholder="Email" />
+        <TextInput style={style.input} onChangeText={setName} autoCapitalize='words' autoComplete='name' placeholder="Name" />
+        <TextInput style={style.input} onChangeText={setPassword} autoCapitalize='none' autoComplete='password' secureTextEntry={true} placeholder="Password" />
+        <TextInput style={style.input} onChangeText={setPhone} autoComplete='tel' keyboardType="numeric" placeholder="Phone" />
+        <RadioGroup radioButtons={genderRadio} onPress={genderSelect} layout="row" />
+        <Pressable onPress={() => setDatePickerVisibility(true)}>
+          <View style={style.dob}>
+            <Text style={{ color: "blue" }}>Select Date Of Birth</Text>
+            <Text>{date_of_birth}</Text>
+          </View>
+        </Pressable>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={() => setDatePickerVisibility(false)}
+        />
         <View style={{ marginTop: 20 }}>
           <Button onPress={signup} color="green" title="Signup" />
         </View>
@@ -61,6 +97,11 @@ const style = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 20,
     marginVertical: 10
+  },
+  dob: {
+    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   register: {
     flexDirection: "row",
