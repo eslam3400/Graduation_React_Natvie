@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, Pressable, StyleSheet } from 'react-nati
 import RadioGroup from 'react-native-radio-buttons-group'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Api from '../../Api'
+import Loading from '../../components/Loading';
 
 const genderRadioButtons = [{
   id: '1',
@@ -22,14 +23,20 @@ function Signup() {
   const [phone, setPhone] = React.useState(null)
   const [genderRadio, setGenderRadio] = React.useState(genderRadioButtons)
   const [gender, setGender] = React.useState(`Male`)
-  const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false)
   const [date_of_birth, setDOB] = React.useState(``)
+  const [loading, setLoading] = React.useState(false)
 
   const signup = async () => {
+    setLoading(true)
     const response = await Api.signup({ email, name, password, phone, gender, date_of_birth })
     const data = await response.json()
-    if (response.ok) alert(`Nice To Have U On Board ^^`)
+    if (response.ok) {
+      setLoading(false)
+      alert(`Nice To Have U On Board ^^ \n Please Check Ur Email For Verification`)
+    }
     else {
+      setLoading(false)
       if (data.errors) alert(data.errors[0])
       else alert(data.message)
     }
@@ -47,6 +54,7 @@ function Signup() {
 
   return (
     <View style={style.container}>
+      <Loading visible={loading} />
       <Text style={style.header}>Signup</Text>
       <View style={style.form}>
         <TextInput style={style.input} onChangeText={setEmail} autoCapitalize='none' autoComplete='email' placeholder="Email" />

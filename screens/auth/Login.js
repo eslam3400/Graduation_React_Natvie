@@ -2,18 +2,23 @@ import React from 'react'
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Api from '../../Api'
+import Loading from '../../components/Loading'
 
 function Login() {
   const [email, onEmailChange] = React.useState("")
   const [password, onPasswordChange] = React.useState("")
+  const [loading, setLoading] = React.useState(false)
 
   const login = async () => {
+    setLoading(true)
     const response = await Api.login({ email, password })
     const data = await response.json()
     if (response.ok) {
       await AsyncStorage.setItem(`token`, data.user_token)
+      setLoading(false)
       alert(`Welcome Back ^^`)
     } else {
+      setLoading(false)
       if (data.errors) alert(data.errors[0])
       else alert(data.message)
     }
@@ -21,6 +26,7 @@ function Login() {
 
   return (
     <View style={style.container}>
+      <Loading visible={loading} />
       <Text style={style.header}>Login</Text>
       <View style={style.form}>
         <TextInput style={style.input} onChangeText={onEmailChange} autoCapitalize='none' textContentType='emailAddress' autoFocus={true} placeholder="email@example.com" />

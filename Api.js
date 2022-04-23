@@ -7,3 +7,8 @@ exports.login = async (data) =>
 
 exports.signup = async (data) =>
   await fetch(`${server}/auth/register`, { method: 'POST', headers, body: JSON.stringify(data) })
+
+exports.profile = async (token) => {
+  headers.append("Authorization", `Bearer ${token}`)
+  return await fetch(`${server}/account`, { method: 'GET', headers })
+}
