@@ -1,10 +1,10 @@
 import React from 'react'
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Button, Pressable, StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Api from '../../Api'
 import Loading from '../../components/Loading'
 
-function Login() {
+function Login({ navigation }) {
   const [email, onEmailChange] = React.useState("")
   const [password, onPasswordChange] = React.useState("")
   const [loading, setLoading] = React.useState(false)
@@ -27,7 +27,7 @@ function Login() {
   return (
     <View style={style.container}>
       <Loading visible={loading} />
-      <Text style={style.header}>Login</Text>
+      {/* <Text style={style.header}>Login</Text> */}
       <View style={style.form}>
         <TextInput style={style.input} onChangeText={onEmailChange} autoCapitalize='none' textContentType='emailAddress' autoFocus={true} placeholder="email@example.com" />
         <TextInput style={style.input} onChangeText={onPasswordChange} autoCapitalize='none' textContentType='password' secureTextEntry={true} placeholder="*********" />
@@ -36,7 +36,9 @@ function Login() {
         </View>
         <View style={style.register}>
           <Text>Don't Have Account?</Text>
-          <Text style={{ color: "blue" }}>Signup</Text>
+          <Pressable onPress={() => navigation.navigate('Signup')}>
+            <Text style={{ color: "blue" }}>Signup</Text>
+          </Pressable>
         </View>
       </View>
     </View>

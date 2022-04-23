@@ -16,7 +16,7 @@ const genderRadioButtons = [{
   value: 'Female'
 }]
 
-function Signup() {
+function Signup({ navigation }) {
   const [email, setEmail] = React.useState(``)
   const [name, setName] = React.useState(``)
   const [password, setPassword] = React.useState(``)
@@ -55,7 +55,7 @@ function Signup() {
   return (
     <View style={style.container}>
       <Loading visible={loading} />
-      <Text style={style.header}>Signup</Text>
+      {/* <Text style={style.header}>Signup</Text> */}
       <View style={style.form}>
         <TextInput style={style.input} onChangeText={setEmail} autoCapitalize='none' autoComplete='email' placeholder="Email" />
         <TextInput style={style.input} onChangeText={setName} autoCapitalize='words' autoComplete='name' placeholder="Name" />
@@ -77,10 +77,12 @@ function Signup() {
         <View style={{ marginTop: 20 }}>
           <Button onPress={signup} color="green" title="Signup" />
         </View>
-        <View style={style.register}>
+        {/* <View style={style.register}>
           <Text>Have Account Already?</Text>
-          <Text style={{ color: "blue" }}>Login</Text>
-        </View>
+          <Pressable onPress={() => navigation.navigate('Login')}>
+            <Text style={{ color: "blue" }}>Login</Text>
+          </Pressable>
+        </View> */}
       </View>
     </View>
   )
