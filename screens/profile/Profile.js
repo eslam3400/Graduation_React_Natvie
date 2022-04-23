@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import Api from '../Api'
-import Loading from '../components/Loading'
+import Api from '../../Api'
+import Loading from '../../components/Loading'
+import { Feather } from '@expo/vector-icons';
 
-function Profile() {
+function Profile({ navigation }) {
   useEffect(async () => {
     getProfileData(await AsyncStorage.getItem('token'))
   }, [])
@@ -31,7 +32,7 @@ function Profile() {
     <View style={style.container}>
       <Loading visible={loading} />
       <Image style={style.avatar} source={{ uri: data.avatar }} />
-      <Text style={style.name}>{data.name}</Text>
+      <Text style={style.name}>{data.name} <Pressable style={{ paddingLeft: 10 }} onPress={() => navigation.navigate('EditProfile')}><Feather name="edit" size={24} color="black" /></Pressable></Text>
       <View style={style.row}>
         <Text style={style.email}>{data.email}</Text>
         <Text style={style.email}> / {data.gender}</Text>

@@ -75,7 +75,7 @@ function Signup({ navigation }) {
           onCancel={() => setDatePickerVisibility(false)}
         />
         <View style={{ marginTop: 20 }}>
-          <Button onPress={signup} color="green" title="Signup" />
+          <Button onPress={signup} color="blue" title="Signup" />
         </View>
         {/* <View style={style.register}>
           <Text>Have Account Already?</Text>

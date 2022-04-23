@@ -16,7 +16,7 @@ function Login({ navigation }) {
     if (response.ok) {
       await AsyncStorage.setItem(`token`, data.user_token)
       setLoading(false)
-      alert(`Welcome Back ^^`)
+      navigation.navigate('Profile')
     } else {
       setLoading(false)
       if (data.errors) alert(data.errors[0])
