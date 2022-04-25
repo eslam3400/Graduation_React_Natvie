@@ -15,3 +15,8 @@ exports.profile = async (token) => {
 
 exports.editProfile = async (data) =>
   await fetch(`${server}/account`, { method: 'PUT', headers, body: JSON.stringify(data) })
+
+exports.getChipsVersion = async (token) => {
+  headers.has("Authorization") ? null : headers.append("Authorization", `Bearer ${token}`)
+  return await fetch(`${server}/chip-versions/enable`, { method: 'GET', headers })
+}
