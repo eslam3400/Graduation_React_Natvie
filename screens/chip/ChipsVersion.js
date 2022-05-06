@@ -12,28 +12,34 @@ function ChipsVersion({ navigation }) {
   const [loading, setLoading] = useState(false)
 
   useEffect(async () => {
-    await getChips("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RAYXNkLmNvbSIsImV4cCI6MTY1MTcxNzIxOX0.m9RXdX9t4Fi84CEHWfo5S7QWLGt2HggDS-PSd4KpXX6N1rOuI3Pupg2v3DgaHKn4h9pPnj7CkGUeivzRQ1oOhw")
+    await getChips()
   }, [])
 
 
-  const getChips = async (token) => {
+  const getChips = async () => {
     setLoading(true)
-    const response = await Api.getChipsVersion(token)
+    const response = await Api.getChipsVersion()
     setLoading(false)
     if (response.ok) setData(await response.json())
     else alert("Something Wrong Went :(")
   }
 
   data.forEach(chip =>
-    chips.push(<ChipCard
-      key={chip.id}
-      imgSrc="https://cdn.vox-cdn.com/thumbor/xBIBkXiGLcP-kph3pCX61U7RMPY=/0x0:1400x788/1200x800/filters:focal(588x282:812x506)/cdn.vox-cdn.com/uploads/chorus_image/image/70412073/0377c76083423a1414e4001161e0cdffb0b36e1f_760x400.0.png"
-      name={chip.name}
-      price={chip.price}
-      description={chip.short_description}
-      rate={chip.average_rating}
-      rateCount={chip.review_count}
-    />)
+    chips.push(
+      <Pressable
+        onPress={() => { navigation.navigate('ChipVersionDetails', { id: chip.id }) }}
+        style={{ width: "90%", marginVertical: 10 }}
+        key={chip.id}>
+        <ChipCard
+          imgSrc={/*chip.main_image ||*/ "https://cdn.vox-cdn.com/thumbor/xBIBkXiGLcP-kph3pCX61U7RMPY=/0x0:1400x788/1200x800/filters:focal(588x282:812x506)/cdn.vox-cdn.com/uploads/chorus_image/image/70412073/0377c76083423a1414e4001161e0cdffb0b36e1f_760x400.0.png"}
+          name={chip.name}
+          price={chip.price}
+          description={chip.short_description}
+          rate={chip.average_rating}
+          rateCount={chip.review_count}
+        />
+      </Pressable>
+    )
   )
 
   return (

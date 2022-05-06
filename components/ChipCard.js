@@ -18,7 +18,7 @@ function ChipCard({ imgSrc, name, price, description, rate, rateCount }) {
 
 const style = StyleSheet.create({
   card: {
-    width: "90%",
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     borderWidth: .5,

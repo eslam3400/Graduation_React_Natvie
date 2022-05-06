@@ -15,7 +15,7 @@ function Profile({ navigation }) {
 
   const getProfileData = async (token) => {
     setLoading(true)
-    const response = await Api.profile(token)
+    const response = await Api.profile()
     const data = await response.json()
     if (response.ok) {
       setLoading(false)
@@ -32,7 +32,7 @@ function Profile({ navigation }) {
     <View style={style.container}>
       <Loading visible={loading} />
       <Image style={style.avatar} source={{ uri: data.avatar }} />
-      <Text style={style.name}>{data.name} <Pressable style={{ paddingLeft: 10 }} onPress={() => navigation.navigate('EditProfile')}><Feather name="edit" size={24} color="black" /></Pressable></Text>
+      <Text style={style.name}>{data.name} <Pressable style={{ paddingLeft: 10 }} onPress={() => navigation.navigate('Update Profile')}><Feather name="edit" size={24} color="black" /></Pressable></Text>
       <View style={style.row}>
         <Text style={style.email}>{data.email}</Text>
         <Text style={style.email}> / {data.gender}</Text>

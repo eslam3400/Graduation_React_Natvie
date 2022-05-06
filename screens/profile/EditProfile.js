@@ -45,7 +45,7 @@ function EditProfile({ navigation }) {
     const response = await Api.editProfile({ id, name, about, phone, address, facebook_url, twitter_url, instagram_url })
     if (response.ok) {
       setLoading(false)
-      navigation.goBack()
+      navigation.navigate("Profile")
     } else {
       setLoading(false)
       alert("Error happened please try again later")
