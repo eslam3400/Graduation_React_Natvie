@@ -34,6 +34,9 @@ const getChipVersionDetails = async (id) =>
 const linkChipToUser = async (data) =>
   await fetch(`${server}/chips/add-new-chip-my-chips`, { method: 'POST', headers, body: JSON.stringify(data) })
 
+const getMyChips = async () =>
+  await fetch(`${server}/chips/my-chips`, { method: 'GET', headers })
+
 const Api = {
   login,
   signup,
@@ -41,7 +44,8 @@ const Api = {
   editProfile,
   getChipsVersion,
   getChipVersionDetails,
-  linkChipToUser
+  linkChipToUser,
+  getMyChips
 }
 
 export default Api
