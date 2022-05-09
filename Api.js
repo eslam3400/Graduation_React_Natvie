@@ -11,22 +11,37 @@ const loadToken = async () => {
 headers.append("Content-Type", "application/json")
 loadToken()
 
-exports.login = async (data) => {
+const login = async (data) => {
   loadToken()
   return await fetch(`${server}/auth/login`, { method: 'POST', headers, body: JSON.stringify(data) })
 }
 
-exports.signup = async (data) =>
+const signup = async (data) =>
   await fetch(`${server}/auth/register`, { method: 'POST', headers, body: JSON.stringify(data) })
 
-exports.profile = async () =>
+const profile = async () =>
   await fetch(`${server}/account`, { method: 'GET', headers })
 
-exports.editProfile = async (data) =>
+const editProfile = async (data) =>
   await fetch(`${server}/account`, { method: 'PUT', headers, body: JSON.stringify(data) })
 
-exports.getChipsVersion = async () =>
+const getChipsVersion = async () =>
   await fetch(`${server}/chip-versions/enable`, { method: 'GET', headers })
 
-exports.getChipVersionDetails = async (id) =>
+const getChipVersionDetails = async (id) =>
   await fetch(`${server}/chip-versions/${id}`, { method: 'GET', headers })
+
+const linkChipToUser = async (data) =>
+  await fetch(`${server}/chips/add-new-chip-my-chips`, { method: 'POST', headers, body: JSON.stringify(data) })
+
+const Api = {
+  login,
+  signup,
+  profile,
+  editProfile,
+  getChipsVersion,
+  getChipVersionDetails,
+  linkChipToUser
+}
+
+export default Api
