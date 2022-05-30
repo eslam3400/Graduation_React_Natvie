@@ -32,10 +32,12 @@ const getChipVersionDetails = async (id) =>
   await fetch(`${server}/chip-versions/${id}`, { method: 'GET', headers })
 
 const linkChipToUser = async (data) =>
-  await fetch(`${server}/chips/add-new-chip-my-chips`, { method: 'POST', headers, body: JSON.stringify(data) })
+  await fetch(`${server}/chip-user`, { method: 'POST', headers, body: JSON.stringify(data) })
 
-const getMyChips = async () =>
-  await fetch(`${server}/chips/my-chips`, { method: 'GET', headers })
+const getMyChips = async () => {
+  loadToken()
+  return await fetch(`${server}/chip-user`, { method: 'GET', headers })
+}
 
 const Api = {
   login,

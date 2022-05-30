@@ -1,19 +1,23 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Button, Pressable, StyleSheet } from 'react-native'
 import MapView from 'react-native-maps';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { Ionicons } from '@expo/vector-icons';
 import Loading from '../components/Loading';
 import Api from '../Api';
 
-function Home() {
+function Home({ navigation }) {
   React.useEffect(async () => {
     setLoading(true)
     const response = await Api.getMyChips()
     const data = await response.json()
     setLoading(false)
     if (response.ok) {
-      data.forEach(e => myChips.push({ label: e.name, value: e.id }));
-      setItems(myChips)
+      if (data.length === 0) navigation.navigate("LinkShip")
+      else {
+        data.forEach(e => myChips.push({ label: e.name, value: e.id }));
+        setItems(myChips)
+      }
     }
     else alert("some thing went wrong please try again later")
   }, [])
@@ -27,15 +31,26 @@ function Home() {
   return (
     <View style={style.container}>
       <Loading visible={loading} />
-      <DropDownPicker
-        open={open}
-        value={value}
-        items={items}
-        setOpen={setOpen}
-        setValue={setValue}
-        setItems={setItems}
-      />
-      <MapView style={{ width: "100%", height: "92%", marginTop: 5 }} />
+      <View style={style.rowContainer}>
+        <View style={{ width: "85%" }}>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+          />
+        </View>
+        <Pressable onPress={() => navigation.navigate("ChipSettings", { id: value })}>
+          <Ionicons name="settings-outline" size={30} color="black" />
+        </Pressable>
+      </View>
+      <MapView style={{ width: "100%", height: "80%", marginTop: 5 }} />
+      <View style={[style.rowContainer, { paddingVertical: 10 }]}>
+        <Button onPress={() => { }} title="Tasks"></Button>
+        <Button onPress={() => { }} title="Users"></Button>
+      </View>
     </View>
   )
 }
@@ -45,6 +60,13 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
+  },
+  rowContainer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 10
   }
 })
 
