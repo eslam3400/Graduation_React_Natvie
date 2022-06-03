@@ -11,6 +11,7 @@ import Intro from './screens/intro/Intro';
 import ChooseDevice from './screens/intro/ChooseDevice';
 import LinkChip from './screens/chip/LinkChip';
 import Home from './screens/Home';
+import ChipSettings from './screens/chip/ChipSettings';
 
 const Drawer = createDrawerNavigator();
 
@@ -28,6 +29,7 @@ export default function App() {
         <Drawer.Screen name="LinkShip" component={LinkChip} />
         <Drawer.Screen name="Chips" component={ChipsVersion} />
         <Drawer.Screen name="ChipVersionDetails" component={ChipDetails} />
+        <Drawer.Screen name="ChipSettings" component={ChipSettings} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

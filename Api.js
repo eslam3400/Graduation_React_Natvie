@@ -39,6 +39,15 @@ const getMyChips = async () => {
   return await fetch(`${server}/chip-user`, { method: 'GET', headers })
 }
 
+const getChipSetting = async (id) =>
+  await fetch(`${server}/chip-user/${id}`, { method: 'GET', headers })
+
+const updateChipSettings = async (data) => {
+  const newHeaders = { ...headers }
+  delete newHeaders.map["content-type"]
+  return await fetch(`${server}/chip-user/info`, { method: 'PUT', headers: newHeaders, body: data })
+}
+
 const Api = {
   login,
   signup,
@@ -47,7 +56,9 @@ const Api = {
   getChipsVersion,
   getChipVersionDetails,
   linkChipToUser,
-  getMyChips
+  getMyChips,
+  getChipSetting,
+  updateChipSettings
 }
 
 export default Api
