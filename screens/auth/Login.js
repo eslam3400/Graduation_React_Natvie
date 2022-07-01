@@ -32,10 +32,13 @@ function Login({ navigation }) {
         <TextInput style={style.input} onChangeText={onEmailChange} autoCapitalize='none' textContentType='emailAddress' autoFocus={true} placeholder="email@example.com" />
         <TextInput style={style.input} onChangeText={onPasswordChange} autoCapitalize='none' textContentType='password' secureTextEntry={true} placeholder="*********" />
         <View style={{ marginTop: 20 }}>
-          <Button onPress={login} color="green" title="Login" />
+          <Button onPress={login} color="blue" title="Login" />
         </View>
         <View style={style.register}>
-          <Text>Don't Have Account?</Text>
+          <Pressable onPress={() => navigation.navigate('ForgetPassword')}>
+            <Text style={{ color: "blue" }}>Forget Password?</Text>
+          </Pressable>
+          <Text>  /  </Text>
           <Pressable onPress={() => navigation.navigate('Signup')}>
             <Text style={{ color: "blue" }}>Signup</Text>
           </Pressable>
@@ -67,7 +70,6 @@ const style = StyleSheet.create({
   },
   register: {
     flexDirection: "row",
-    justifyContent: "space-between",
     paddingVertical: 15
   }
 })

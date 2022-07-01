@@ -12,6 +12,9 @@ import ChooseDevice from './screens/intro/ChooseDevice';
 import LinkChip from './screens/chip/LinkChip';
 import Home from './screens/Home';
 import ChipSettings from './screens/chip/ChipSettings';
+import ChipUsers from './screens/chip/ChipUsers';
+import AddUser from './screens/chip/AddUser';
+import ForgetPassword from './screens/auth/ForgetPassword';
 
 const Drawer = createDrawerNavigator();
 
@@ -22,6 +25,7 @@ export default function App() {
         <Drawer.Screen name="Intro" component={Intro} />
         <Drawer.Screen name="Login" component={Login} />
         <Drawer.Screen name="Signup" component={Signup} />
+        <Drawer.Screen name="ForgetPassword" component={ForgetPassword} />
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen name="Profile" component={Profile} />
         <Drawer.Screen name="Update Profile" component={EditProfile} />
@@ -30,6 +34,8 @@ export default function App() {
         <Drawer.Screen name="Chips" component={ChipsVersion} />
         <Drawer.Screen name="ChipVersionDetails" component={ChipDetails} />
         <Drawer.Screen name="ChipSettings" component={ChipSettings} />
+        <Drawer.Screen name="ChipUsers" component={ChipUsers} />
+        <Drawer.Screen name="AddUserToChip" component={AddUser} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

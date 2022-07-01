@@ -9,18 +9,20 @@ const loadToken = async () => {
 }
 
 headers.append("Content-Type", "application/json")
-loadToken()
 
-const login = async (data) => {
-  loadToken()
-  return await fetch(`${server}/auth/login`, { method: 'POST', headers, body: JSON.stringify(data) })
-}
+const login = async (data) =>
+  await fetch(`${server}/auth/login`, { method: 'POST', headers, body: JSON.stringify(data) })
 
 const signup = async (data) =>
   await fetch(`${server}/auth/register`, { method: 'POST', headers, body: JSON.stringify(data) })
 
-const profile = async () =>
-  await fetch(`${server}/account`, { method: 'GET', headers })
+const forgetPassword = async (data) =>
+  await fetch(`${server}/auth/forgot-password`, { method: 'POST', headers, body: JSON.stringify(data) })
+
+const profile = async () => {
+  loadToken()
+  return await fetch(`${server}/account`, { method: 'GET', headers })
+}
 
 const editProfile = async (data) =>
   await fetch(`${server}/account`, { method: 'PUT', headers, body: JSON.stringify(data) })
@@ -48,9 +50,16 @@ const updateChipSettings = async (data) => {
   return await fetch(`${server}/chip-user/info`, { method: 'PUT', headers: newHeaders, body: data })
 }
 
+const getChipUsers = async (id) =>
+  await fetch(`${server}/chip-user/chip/${id}`, { method: 'GET', headers })
+
+const addUserToChip = async (data) =>
+  await fetch(`${server}/chip-user/add-new-user`, { method: 'POST', headers, body: JSON.stringify(data) })
+
 const Api = {
   login,
   signup,
+  forgetPassword,
   profile,
   editProfile,
   getChipsVersion,
@@ -58,7 +67,9 @@ const Api = {
   linkChipToUser,
   getMyChips,
   getChipSetting,
-  updateChipSettings
+  updateChipSettings,
+  getChipUsers,
+  addUserToChip
 }
 
 export default Api

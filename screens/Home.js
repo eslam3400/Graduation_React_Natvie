@@ -15,7 +15,7 @@ function Home({ navigation }) {
     if (response.ok) {
       if (data.length === 0) navigation.navigate("LinkShip")
       else {
-        data.forEach(e => myChips.push({ label: e.name, value: e.id }));
+        data.forEach(e => myChips.push({ label: e.name, value: e.id, chipID: e.chip_id }));
         setItems(myChips)
       }
     }
@@ -49,7 +49,7 @@ function Home({ navigation }) {
       <MapView style={{ width: "100%", height: "80%", marginTop: 5 }} />
       <View style={[style.rowContainer, { paddingVertical: 10 }]}>
         <Button onPress={() => { }} title="Tasks"></Button>
-        <Button onPress={() => { }} title="Users"></Button>
+        <Button onPress={() => navigation.navigate("ChipUsers", { id: 2 })} title="Users"></Button>
       </View>
     </View>
   )
