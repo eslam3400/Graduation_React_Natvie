@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { View, Pressable, StyleSheet } from 'react-native'
 import Api from '../../Api'
 import Loading from '../../components/Loading'
 import ChipCard from '../../components/ChipCard'

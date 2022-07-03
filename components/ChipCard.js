@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import RatingInfo from './RatingInfo';
 
 function ChipCard({ imgSrc, name, price, description, rate, rateCount }) {
   return (
@@ -10,7 +10,7 @@ function ChipCard({ imgSrc, name, price, description, rate, rateCount }) {
         <Text style={style.cardBodyLabel}>Name: <Text style={style.cardBodyText}> {name}</Text></Text>
         <Text style={style.cardBodyLabel}>Price: <Text style={style.cardBodyText}> ${price}</Text></Text>
         <Text style={style.cardBodyText}>{description}</Text>
-        <Text style={style.cardBodyLabel}><AntDesign name="star" size={14} color="black" /> {rate} / <Entypo name="users" size={14} color="black" /> {rateCount}</Text>
+        <Text style={style.cardBodyLabel}><RatingInfo users={rateCount} rate={rate} /></Text>
       </View>
     </View>
   )

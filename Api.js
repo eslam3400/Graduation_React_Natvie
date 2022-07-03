@@ -33,6 +33,12 @@ const getChipsVersion = async () =>
 const getChipVersionDetails = async (id) =>
   await fetch(`${server}/chip-versions/${id}`, { method: 'GET', headers })
 
+const getChipVersionReviews = async (id) =>
+  await fetch(`${server}/reviews/${id}`, { method: 'GET', headers })
+
+const addChipVersionReview = async (data) =>
+  await fetch(`${server}/reviews`, { method: 'POST', headers, body: JSON.stringify(data) })
+
 const linkChipToUser = async (data) =>
   await fetch(`${server}/chip-user`, { method: 'POST', headers, body: JSON.stringify(data) })
 
@@ -64,6 +70,8 @@ const Api = {
   editProfile,
   getChipsVersion,
   getChipVersionDetails,
+  getChipVersionReviews,
+  addChipVersionReview,
   linkChipToUser,
   getMyChips,
   getChipSetting,
