@@ -15,6 +15,7 @@ import ChipSettings from './screens/chip/ChipSettings';
 import ChipUsers from './screens/chip/ChipUsers';
 import AddUser from './screens/chip/AddUser';
 import ForgetPassword from './screens/auth/ForgetPassword';
+import Questions from './screens/chip/Questions';
 
 const Drawer = createDrawerNavigator();
 
@@ -33,6 +34,7 @@ export default function App() {
         <Drawer.Screen name="LinkShip" component={LinkChip} />
         <Drawer.Screen name="Chips" component={ChipsVersion} />
         <Drawer.Screen name="ChipVersionDetails" component={ChipDetails} />
+        <Drawer.Screen name="ChipVersionQuestions" component={Questions} />
         <Drawer.Screen name="ChipSettings" component={ChipSettings} />
         <Drawer.Screen name="ChipUsers" component={ChipUsers} />
         <Drawer.Screen name="AddUserToChip" component={AddUser} />
