@@ -1,77 +1,69 @@
 import React from 'react'
-import { View, Text, TextInput, Button, Pressable, StyleSheet } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { View, TouchableWithoutFeedback } from 'react-native'
+import { Layout, Text, Input, Button, Spinner } from '@ui-kitten/components'
+import { Entypo } from '@expo/vector-icons';
 import Api from '../../Api'
-import Loading from '../../components/Loading'
+import MyStyles from '../../Styles'
+import Local from '../../Locals'
 
 function Login({ navigation }) {
-  const [email, onEmailChange] = React.useState("")
-  const [password, onPasswordChange] = React.useState("")
+  const [email, setEmail] = React.useState("")
+  const [password, setPassword] = React.useState("")
   const [loading, setLoading] = React.useState(false)
+  const [showPassword, setShowPassword] = React.useState(true);
 
   const login = async () => {
     setLoading(true)
     const response = await Api.login({ email, password })
     const data = await response.json()
+    setLoading(false)
     if (response.ok) {
-      await AsyncStorage.setItem(`token`, data.user_token)
-      setLoading(false)
-      navigation.navigate('Home')
-    } else {
-      setLoading(false)
-      if (data.errors) alert(data.errors[0])
-      else alert(data.message)
+      Local.setToken(data.user_token)
+      return navigation.navigate('Home')
     }
+    if (data.errors) return alert(data.errors[0])
+    alert(data.message)
   }
+
+  const spinner = () => <Spinner size='large' status="info" />
+
+  const showPasswordIcon = () => (
+    <TouchableWithoutFeedback onPress={() => setShowPassword(!showPassword)}>
+      <Entypo name={showPassword ? "eye" : "eye-with-line"} size={24} color="black" />
+    </TouchableWithoutFeedback>
+  );
 
   return (
-    <View style={style.container}>
-      <Loading visible={loading} />
-      {/* <Text style={style.header}>Login</Text> */}
-      <View style={style.form}>
-        <TextInput style={style.input} onChangeText={onEmailChange} autoCapitalize='none' textContentType='emailAddress' autoFocus={true} placeholder="email@example.com" />
-        <TextInput style={style.input} onChangeText={onPasswordChange} autoCapitalize='none' textContentType='password' secureTextEntry={true} placeholder="*********" />
-        <View style={{ marginTop: 20 }}>
-          <Button onPress={login} color="blue" title="Login" />
-        </View>
-        <View style={style.register}>
-          <Pressable onPress={() => navigation.navigate('ForgetPassword')}>
-            <Text style={{ color: "blue" }}>Forget Password?</Text>
-          </Pressable>
+    <Layout style={[MyStyles.container, MyStyles.containerPadding]}>
+      <View style={MyStyles.fullWidth}>
+        <Input label='Email'
+          style={MyStyles.marginVertical}
+          onChangeText={setEmail}
+          autoCapitalize='none'
+          textContentType='emailAddress'
+          autoFocus={true}
+          placeholder="email@example.com" />
+        <Input label='Password'
+          style={MyStyles.marginVertical}
+          accessoryRight={showPasswordIcon}
+          secureTextEntry={showPassword}
+          onChangeText={setPassword}
+          placeholder='Place your Text' />
+        <Button style={[MyStyles.marginVertical2]} onPress={login} accessoryLeft={loading ? spinner : null}>
+          Login
+        </Button>
+        <View style={[MyStyles.row, MyStyles.marginVertical]}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('ForgetPassword')}>
+            <Text status="primary">Forget Password?</Text>
+          </TouchableWithoutFeedback>
           <Text>  /  </Text>
-          <Pressable onPress={() => navigation.navigate('Signup')}>
-            <Text style={{ color: "blue" }}>Signup</Text>
-          </Pressable>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('Signup')}>
+            <Text status="primary">Signup</Text>
+          </TouchableWithoutFeedback>
         </View>
       </View>
-    </View>
+    </Layout>
   )
 }
-
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  header: {
-    fontSize: 30,
-  },
-  form: {
-    width: "80%",
-    marginTop: 20
-  },
-  input: {
-    height: 35,
-    borderWidth: .5,
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    marginVertical: 15
-  },
-  register: {
-    flexDirection: "row",
-    paddingVertical: 15
-  }
-})
 
 export default Login

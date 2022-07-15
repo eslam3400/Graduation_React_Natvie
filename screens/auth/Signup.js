@@ -1,123 +1,77 @@
 import React from 'react'
-import { View, Text, TextInput, Button, Pressable, StyleSheet } from 'react-native'
-import RadioGroup from 'react-native-radio-buttons-group'
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { Layout, Input, Button, Spinner, Radio, RadioGroup, Datepicker } from '@ui-kitten/components'
+import { Entypo } from '@expo/vector-icons';
 import Api from '../../Api'
-import Loading from '../../components/Loading';
-
-const genderRadioButtons = [{
-  id: '1',
-  label: 'Male',
-  value: 'Male',
-  selected: true
-}, {
-  id: '2',
-  label: 'Female',
-  value: 'Female'
-}]
+import MyStyles from '../../Styles'
 
 function Signup({ navigation }) {
   const [email, setEmail] = React.useState(``)
   const [name, setName] = React.useState(``)
   const [password, setPassword] = React.useState(``)
   const [phone, setPhone] = React.useState(null)
-  const [genderRadio, setGenderRadio] = React.useState(genderRadioButtons)
-  const [gender, setGender] = React.useState(`Male`)
-  const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false)
+  const [gender, setGender] = React.useState(0)
   const [date_of_birth, setDOB] = React.useState(``)
   const [loading, setLoading] = React.useState(false)
+  const [showPassword, setShowPassword] = React.useState(true);
 
   const signup = async () => {
     setLoading(true)
     const response = await Api.signup({ email, name, password, phone, gender, date_of_birth })
     const data = await response.json()
-    if (response.ok) {
-      setLoading(false)
-      alert(`Nice To Have U On Board ^^ \n Please Check Ur Email For Verification`)
-    }
-    else {
-      setLoading(false)
-      if (data.errors) alert(data.errors[0])
-      else alert(data.message)
-    }
+    setLoading(false)
+    if (response.ok) return alert(`Nice To Have U On Board ^^ \n Please Check Ur Email For Verification`)
+    if (data.errors) return alert(data.errors[0])
+    alert(data.message)
   }
 
-  function genderSelect(radioButtonsArray) {
-    setGenderRadio(radioButtonsArray)
-    setGender(radioButtonsArray[0].selected ? `Male` : `Female`);
-  }
+  const spinner = () => <Spinner size='large' status="info" />
 
-  const handleConfirm = (date) => {
-    setDOB(date.toLocaleDateString())
-    setDatePickerVisibility(false);
-  };
+  const showPasswordIcon = () => (
+    <TouchableWithoutFeedback onPress={() => setShowPassword(!showPassword)}>
+      <Entypo name={showPassword ? "eye" : "eye-with-line"} size={24} color="black" />
+    </TouchableWithoutFeedback>
+  );
 
   return (
-    <View style={style.container}>
-      <Loading visible={loading} />
-      {/* <Text style={style.header}>Signup</Text> */}
-      <View style={style.form}>
-        <TextInput style={style.input} onChangeText={setEmail} autoCapitalize='none' autoComplete='email' placeholder="Email" />
-        <TextInput style={style.input} onChangeText={setName} autoCapitalize='words' autoComplete='name' placeholder="Name" />
-        <TextInput style={style.input} onChangeText={setPassword} autoCapitalize='none' autoComplete='password' secureTextEntry={true} placeholder="Password" />
-        <TextInput style={style.input} onChangeText={setPhone} autoComplete='tel' keyboardType="numeric" placeholder="Phone" />
-        <RadioGroup radioButtons={genderRadio} onPress={genderSelect} layout="row" />
-        <Pressable onPress={() => setDatePickerVisibility(true)}>
-          <View style={style.dob}>
-            <Text style={{ color: "blue" }}>Select Date Of Birth</Text>
-            <Text>{date_of_birth}</Text>
-          </View>
-        </Pressable>
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="date"
-          onConfirm={handleConfirm}
-          onCancel={() => setDatePickerVisibility(false)}
-        />
-        <View style={{ marginTop: 20 }}>
-          <Button onPress={signup} color="blue" title="Signup" />
-        </View>
-        {/* <View style={style.register}>
-          <Text>Have Account Already?</Text>
-          <Pressable onPress={() => navigation.navigate('Login')}>
-            <Text style={{ color: "blue" }}>Login</Text>
-          </Pressable>
-        </View> */}
-      </View>
-    </View>
+    <Layout style={[MyStyles.container, MyStyles.containerPadding]}>
+      <Input label='Email'
+        style={MyStyles.marginVertical}
+        onChangeText={setEmail}
+        autoCapitalize='none'
+        placeholder="email@example.com" />
+      <Input label='Name'
+        style={MyStyles.marginVertical}
+        onChangeText={setName}
+        autoCapitalize='words'
+        placeholder="John Dow" />
+      <Input label='Password'
+        style={MyStyles.marginVertical}
+        accessoryRight={showPasswordIcon}
+        secureTextEntry={showPassword}
+        onChangeText={setPassword}
+        placeholder='Place your Text' />
+      <Input label='Phone'
+        style={MyStyles.marginVertical}
+        onChangeText={setPhone}
+        autoComplete='tel'
+        keyboardType="numeric"
+        placeholder="01223456789" />
+      <Datepicker label='Birthday'
+        style={[MyStyles.fullWidth, MyStyles.marginVertical]}
+        date={date_of_birth}
+        onSelect={setDOB}
+        accessoryRight={<Entypo name="calendar" size={24} color="black" />}
+        placeholder='Pick Your Birthday Date' />
+      <RadioGroup style={[MyStyles.row, MyStyles.marginVertical]} selectedIndex={gender} onChange={setGender}>
+        <Radio>Male</Radio>
+        <Radio>Female</Radio>
+      </RadioGroup>
+      <Button style={[MyStyles.fullWidth, MyStyles.marginVertical2]} onPress={signup} accessoryLeft={loading ? spinner : null}>
+        Signup
+      </Button>
+    </Layout>
   )
 }
-
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  header: {
-    fontSize: 30,
-  },
-  form: {
-    marginTop: 20,
-    width: '80%'
-  },
-  input: {
-    height: 35,
-    borderWidth: .5,
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    marginVertical: 10
-  },
-  dob: {
-    marginTop: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  register: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 15
-  }
-})
 
 export default Signup
