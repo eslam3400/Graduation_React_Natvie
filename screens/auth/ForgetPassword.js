@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Input, Button } from '@ui-kitten/components'
+import { Layout, Input, Button, Spinner } from '@ui-kitten/components'
 import Api from '../../Api'
 import MyStyles from '../../Styles'
 
@@ -16,6 +16,8 @@ function ForgetPassword({ navigation }) {
     alert("There is something went wrong please contact support!")
   }
 
+  const spinner = () => <Spinner size='large' status="info" />
+
   return (
     <Layout style={[MyStyles.container, MyStyles.containerPadding]}>
       <Input label='Email'
@@ -26,8 +28,8 @@ function ForgetPassword({ navigation }) {
         keyboardType='email-address'
         autoFocus={true}
         placeholder="email@example.com" />
-      <Button style={[MyStyles.fullWidth, MyStyles.marginVertical4]} onPress={forgetPassword}>
-        Reset
+      <Button style={[MyStyles.fullWidth, MyStyles.marginVertical2]} onPress={forgetPassword} accessoryLeft={loading ? spinner : null}>
+        Signup
       </Button>
     </Layout>
   )

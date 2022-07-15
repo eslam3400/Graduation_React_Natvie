@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { TouchableWithoutFeedback } from 'react-native'
 import { Layout, Input, Button, Spinner, Radio, RadioGroup, Datepicker } from '@ui-kitten/components'
 import { Entypo } from '@expo/vector-icons';
 import Api from '../../Api'
@@ -16,8 +16,9 @@ function Signup({ navigation }) {
   const [showPassword, setShowPassword] = React.useState(true);
 
   const signup = async () => {
+    const genderText = gender == 0 ? 'Male' : 'Female'
     setLoading(true)
-    const response = await Api.signup({ email, name, password, phone, gender, date_of_birth })
+    const response = await Api.signup({ email, name, password, phone, gender: genderText, date_of_birth })
     const data = await response.json()
     setLoading(false)
     if (response.ok) return alert(`Nice To Have U On Board ^^ \n Please Check Ur Email For Verification`)

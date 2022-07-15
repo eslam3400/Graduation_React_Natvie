@@ -1,47 +1,38 @@
 import React from 'react'
-import { View, TextInput, Button, StyleSheet } from 'react-native'
+import { Layout, Input, Button, Spinner } from '@ui-kitten/components'
 import Api from '../../Api'
-import Loading from '../../components/Loading';
+import MyStyles from '../../Styles'
 
 function AddUser({ navigation, route }) {
+
   const [loading, setLoading] = React.useState(false)
   const [userID, setUserID] = React.useState(null)
 
-  async function addUserToChip(data) {
+  async function addUserToChip() {
     setLoading(true)
-    const response = await Api.addUserToChip(data);
+    const response = await Api.addUserToChip({ user_id: userID, chip_id: route.params.id });
+    const data = await response.json();
     setLoading(false)
-    if (response.ok) {
-      navigation.goBack()
-    } else {
-      alert("Something Went Wrong :(")
-    }
+    return alert(data.message)
   }
+
+  const spinner = () => <Spinner size='large' status="info" />
 
   return (
-    <View style={style.container}>
-      <Loading visible={loading} />
-      <TextInput style={style.input} editable={false} placeholder='Chip ID' value={route.params.chipID.toString()} />
-      <TextInput style={style.input} placeholder='User ID' onChange={setUserID} />
-      <Button onPress={() => navigation.goBack()} title="Add" />
-    </View>
+    <Layout style={[MyStyles.container, MyStyles.containerPadding]}>
+      <Input label='User ID'
+        style={MyStyles.marginVertical2}
+        onChangeText={setUserID}
+        keyboardType="decimal-pad"
+        placeholder='1' />
+      <Button
+        style={[MyStyles.marginVertical2, MyStyles.fullWidth]}
+        onPress={addUserToChip}
+        accessoryLeft={loading ? spinner : null}>
+        Add User
+      </Button>
+    </Layout>
   )
 }
-
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  input: {
-    borderWidth: 1,
-    borderRadius: 10,
-    width: "80%",
-    paddingVertical: 8,
-    marginVertical: 10,
-    textAlign: "center"
-  }
-})
 
 export default AddUser
