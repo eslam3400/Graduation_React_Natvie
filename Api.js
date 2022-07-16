@@ -68,6 +68,18 @@ const getChipUsers = async (id) =>
 const addUserToChip = async (data) =>
   await fetch(`${server}/chip-user/add-new-user`, { method: 'POST', headers, body: JSON.stringify(data) })
 
+const getTasks = async (id) =>
+  await fetch(`${server}/tasks/chip/${id}`, { method: 'GET', headers })
+
+const addTask = async (data) =>
+  await fetch(`${server}/tasks`, { method: 'POST', headers, body: JSON.stringify(data) })
+
+const getTaskByID = async (id) =>
+  await fetch(`${server}/tasks/${id}`, { method: 'GET', headers })
+
+const deleteTask = async (id) =>
+  await fetch(`${server}/tasks/${id}`, { method: 'DELETE', headers })
+
 const Api = {
   login,
   signup,
@@ -85,7 +97,11 @@ const Api = {
   getChipSetting,
   updateChipSettings,
   getChipUsers,
-  addUserToChip
+  addUserToChip,
+  getTasks,
+  addTask,
+  getTaskByID,
+  deleteTask,
 }
 
 export default Api

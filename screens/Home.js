@@ -52,7 +52,7 @@ function Home({ navigation }) {
   const onActionClick = (name) => {
     switch (name) {
       case 'btnTasks':
-        navigation.navigate('Tasks')
+        navigation.navigate('Tasks', { id: chips[selectedIndex.row].chip_id })
         break;
       case 'btnUsers':
         navigation.navigate('ChipUsers', { id: chips[selectedIndex.row].chip_id })

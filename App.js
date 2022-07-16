@@ -19,6 +19,9 @@ import ChipUsers from './screens/chip/ChipUsers';
 import AddUser from './screens/chip/AddUser';
 import ForgetPassword from './screens/auth/ForgetPassword';
 import Questions from './screens/chip/Questions';
+import Tasks from './screens/tasks/Tasks';
+import AddTask from './screens/tasks/AddTask';
+import TaskDetails from './screens/tasks/TaskDetails';
 
 const Drawer = createDrawerNavigator();
 
@@ -42,6 +45,9 @@ export default function App() {
           <Drawer.Screen name="ChipSettings" component={ChipSettings} />
           <Drawer.Screen name="ChipUsers" component={ChipUsers} />
           <Drawer.Screen name="AddUserToChip" component={AddUser} />
+          <Drawer.Screen name="Tasks" component={Tasks} />
+          <Drawer.Screen name="AddTask" component={AddTask} />
+          <Drawer.Screen name="TaskDetails" component={TaskDetails} />
         </Drawer.Navigator>
       </NavigationContainer>
     </ApplicationProvider>

@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 20,
   },
-  row: { flexDirection: "row" }
+  row: { flexDirection: "row", flexWrap: "wrap" }
 })
 
 export default styles
