@@ -29,7 +29,7 @@ function ForgetPassword({ navigation }) {
         autoFocus={true}
         placeholder="email@example.com" />
       <Button style={[MyStyles.fullWidth, MyStyles.marginVertical2]} onPress={forgetPassword} accessoryLeft={loading ? spinner : null}>
-        Signup
+        Reset Password
       </Button>
     </Layout>
   )

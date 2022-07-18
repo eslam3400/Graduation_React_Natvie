@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
+import { Image, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { Layout, Text, Input } from '@ui-kitten/components'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Api from '../../Api'
 import Loading from '../../components/Loading'
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialIcons, Entypo, FontAwesome } from '@expo/vector-icons';
+import MyStyles from '../../Styles'
 
 function Profile({ navigation }) {
   useEffect(async () => {
@@ -29,65 +31,56 @@ function Profile({ navigation }) {
   }
 
   return (
-    <View style={style.container}>
+    <Layout style={[MyStyles.container, MyStyles.containerPadding]}>
       <Loading visible={loading} />
       <Image style={style.avatar} source={{ uri: data.avatar }} />
-      <Text style={style.name}>{data.name} <Pressable style={{ paddingLeft: 10 }} onPress={() => navigation.navigate('Update Profile')}><Feather name="edit" size={24} color="black" /></Pressable></Text>
-      <View style={style.row}>
+      <Text style={{ marginTop: 20 }} category="h4">{data.name} <TouchableWithoutFeedback style={{ paddingLeft: 10 }} onPress={() => navigation.navigate('Update Profile')}><Feather name="edit" size={24} color="black" /></TouchableWithoutFeedback></Text>
+      <Layout style={MyStyles.row}>
         <Text style={style.email}>{data.email}</Text>
         <Text style={style.email}> / {data.gender}</Text>
-      </View>
-      <View style={style.about}>
-        <Text style={style.sectionHeader}>About</Text>
-        <Text style={style.aboutText}>{data.about}</Text>
-      </View>
-    </View>
+      </Layout>
+      <Input
+        style={[MyStyles.marginVertical, { backgroundColor: "transparent", marginTop: 20 }]}
+        accessoryLeft={<MaterialIcons name="description" size={24} color="black" />}
+        value={data.about} />
+      <Input
+        style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
+        accessoryLeft={<Feather name="phone" size={24} color="black" />}
+        value={data.phone} />
+      <Input
+        style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
+        accessoryLeft={<Entypo name="address" size={24} color="black" />}
+        value={data.address} />
+      <Input
+        style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
+        accessoryLeft={<FontAwesome name="birthday-cake" size={24} color="black" />}
+        value={data.date_of_birth} />
+      <Input
+        style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
+        accessoryLeft={<Entypo name="facebook" size={24} color="black" />}
+        value={data.facebook_url} />
+      <Input
+        style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
+        accessoryLeft={<Entypo name="twitter" size={24} color="black" />}
+        value={data.twitter_url} />
+      <Input
+        style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
+        accessoryLeft={<Entypo name="instagram" size={24} color="black" />}
+        value={data.instagram_url} />
+    </Layout>
   )
 }
 
 const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%"
-  },
-  row: {
-    flexDirection: "row",
-    marginTop: 3
-  },
-  sectionHeader: {
-    paddingLeft: 12,
-    color: "#6495ed",
-    fontSize: 20,
-    marginTop: -27
-  },
   avatar: {
     width: 100,
     height: 100,
     borderRadius: 50
   },
-  name: {
-    marginTop: 10,
-    fontSize: 25
-  },
   email: {
     fontSize: 14,
     color: "gray",
     fontStyle: "italic"
-  },
-  about: {
-    width: "90%",
-    marginTop: 20,
-    borderColor: "gray",
-    borderWidth: .5,
-    borderRadius: 10,
-    paddingVertical: 10
-  },
-  aboutText: {
-    fontSize: 14,
-    color: "white",
-    paddingHorizontal: 20
   }
 })
 

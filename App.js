@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
 import { default as theme } from './custom-theme.json';
@@ -23,32 +24,32 @@ import Tasks from './screens/tasks/Tasks';
 import AddTask from './screens/tasks/AddTask';
 import TaskDetails from './screens/tasks/TaskDetails';
 
-const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Login">
-          <Drawer.Screen name="Intro" component={Intro} />
-          <Drawer.Screen name="Login" component={Login} />
-          <Drawer.Screen name="Signup" component={Signup} />
-          <Drawer.Screen name="ForgetPassword" component={ForgetPassword} />
-          <Drawer.Screen name="Home" component={Home} />
-          <Drawer.Screen name="Profile" component={Profile} />
-          <Drawer.Screen name="Update Profile" component={EditProfile} />
-          <Drawer.Screen name="ChooseDeviceIntro" component={ChooseDevice} />
-          <Drawer.Screen name="LinkShip" component={LinkChip} />
-          <Drawer.Screen name="Chips" component={ChipsVersion} />
-          <Drawer.Screen name="ChipVersionDetails" component={ChipDetails} />
-          <Drawer.Screen name="ChipVersionQuestions" component={Questions} />
-          <Drawer.Screen name="ChipSettings" component={ChipSettings} />
-          <Drawer.Screen name="ChipUsers" component={ChipUsers} />
-          <Drawer.Screen name="AddUserToChip" component={AddUser} />
-          <Drawer.Screen name="Tasks" component={Tasks} />
-          <Drawer.Screen name="AddTask" component={AddTask} />
-          <Drawer.Screen name="TaskDetails" component={TaskDetails} />
-        </Drawer.Navigator>
+        <Stack.Navigator initialRouteName="Intro">
+          <Stack.Screen options={{ headerShown: false }} name="Intro" component={Intro} />
+          <Stack.Screen options={{ headerBackVisible: false }} name="Login" component={Login} />
+          <Stack.Screen options={{ headerBackVisible: false }} name="Signup" component={Signup} />
+          <Stack.Screen options={{ headerBackVisible: false }} name="ForgetPassword" component={ForgetPassword} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="Update Profile" component={EditProfile} />
+          <Stack.Screen name="ChooseDeviceIntro" component={ChooseDevice} />
+          <Stack.Screen name="LinkShip" component={LinkChip} />
+          <Stack.Screen name="Chips" component={ChipsVersion} />
+          <Stack.Screen name="ChipVersionDetails" component={ChipDetails} />
+          <Stack.Screen name="ChipVersionQuestions" component={Questions} />
+          <Stack.Screen name="ChipSettings" component={ChipSettings} />
+          <Stack.Screen name="ChipUsers" component={ChipUsers} />
+          <Stack.Screen name="AddUserToChip" component={AddUser} />
+          <Stack.Screen name="Tasks" component={Tasks} />
+          <Stack.Screen name="AddTask" component={AddTask} />
+          <Stack.Screen name="TaskDetails" component={TaskDetails} />
+        </Stack.Navigator>
       </NavigationContainer>
     </ApplicationProvider>
   );

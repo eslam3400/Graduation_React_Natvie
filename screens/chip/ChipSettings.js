@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, TextInput, Button, StyleSheet } from 'react-native'
+import { TextInput, Button, StyleSheet } from 'react-native'
+import { Layout } from '@ui-kitten/components'
 import Api from '../../Api'
 import Loading from '../../components/Loading'
 import * as DocumentPicker from 'expo-document-picker';
@@ -22,14 +23,14 @@ function ChipSettings({ route, navigation }) {
   }, [])
 
   return (
-    <View style={style.container}>
+    <Layout style={style.container}>
       <Loading visible={loading} />
       <TextInput style={style.textInput} onChangeText={setName} placeholder="Name" value={name} />
       <Button onPress={async () => {
         const document = await DocumentPicker.getDocumentAsync()
         setDocument(document)
       }} title="Choose Photo" />
-      <View style={{ marginTop: 20 }}>
+      <Layout style={{ marginTop: 20 }}>
         <Button onPress={async () => {
           // setLoading(true)
           // var data = new FormData()
@@ -65,8 +66,8 @@ function ChipSettings({ route, navigation }) {
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
         }} title="update" />
-      </View>
-    </View>
+      </Layout>
+    </Layout>
   )
 }
 

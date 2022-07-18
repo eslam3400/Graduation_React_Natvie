@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { View, TextInput, Button, StyleSheet } from 'react-native'
+import { Layout, Input, Button, Spinner } from '@ui-kitten/components'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Api from '../../Api'
 import Loading from '../../components/Loading'
+import MyStyles from '../../Styles'
 
 function EditProfile({ navigation }) {
   useEffect(() => getProfileData(), [])
@@ -15,6 +16,7 @@ function EditProfile({ navigation }) {
   const [twitter_url, setTwitter] = useState("")
   const [instagram_url, setInstagram] = useState("")
   const [loading, setLoading] = useState(false)
+  const [btnLoading, setBtnLoading] = useState(false)
 
   let id
 
@@ -23,8 +25,8 @@ function EditProfile({ navigation }) {
     const token = await AsyncStorage.getItem('token')
     const response = await Api.profile(token)
     const data = await response.json()
+    setLoading(false)
     if (response.ok) {
-      setLoading(false)
       id = data.id
       setName(data.name ?? "")
       setAbout(data.about ?? "")
@@ -32,57 +34,34 @@ function EditProfile({ navigation }) {
       setAddress(data.address ?? "")
       setFb(data.facebook_url ?? "")
       setTwitter(data.twitter_url ?? "")
-      setInstagram(data.instagram_url ?? "")
+      return setInstagram(data.instagram_url ?? "")
     }
-    else {
-      setLoading(false)
-      alert("Something Wrong Went :(")
-    }
+    alert("Something Wrong Went :(")
   }
 
   const updateProfileData = async () => {
-    setLoading(true)
+    setBtnLoading(true)
     const response = await Api.editProfile({ id, name, about, phone, address, facebook_url, twitter_url, instagram_url })
-    if (response.ok) {
-      setLoading(false)
-      navigation.navigate("Profile")
-    } else {
-      setLoading(false)
-      alert("Error happened please try again later")
-    }
+    setBtnLoading(false)
+    if (response.ok) return navigation.navigate("Profile")
+    alert("Error happened please try again later")
   }
 
+  const spinner = () => <Spinner size='large' status="info" />
+
   return (
-    <View style={style.container}>
+    <Layout style={[MyStyles.container, MyStyles.containerPadding]}>
       <Loading visible={loading} />
-      <TextInput style={style.input} onChangeText={setName} value={name} placeholder="Name" />
-      <TextInput style={style.input} onChangeText={setAbout} value={about} placeholder="About" />
-      <TextInput style={style.input} onChangeText={setPhone} value={phone} placeholder="Phone" />
-      <TextInput style={style.input} onChangeText={setAddress} value={address} placeholder="Address" />
-      <TextInput style={style.input} onChangeText={setFb} value={facebook_url} placeholder="Facebook URL" />
-      <TextInput style={style.input} onChangeText={setTwitter} value={twitter_url} placeholder="Twitter URL" />
-      <TextInput style={style.input} onChangeText={setInstagram} value={instagram_url} placeholder="Instagram URL" />
-      <View style={{ marginTop: 20 }}>
-        <Button onPress={updateProfileData} color="blue" title="Update" />
-      </View>
-    </View>
+      <Input label="Name" style={MyStyles.marginVertical} onChangeText={setName} value={name} placeholder="Name" />
+      <Input label="About" style={MyStyles.marginVertical} onChangeText={setAbout} value={about} placeholder="About" />
+      <Input label="Phone" keyboardType='decimal-pad' style={MyStyles.marginVertical} onChangeText={setPhone} value={phone} placeholder="Phone" />
+      <Input label="Address" style={MyStyles.marginVertical} onChangeText={setAddress} value={address} placeholder="Address" />
+      <Input label="Facebook" style={MyStyles.marginVertical} onChangeText={setFb} value={facebook_url} placeholder="Facebook URL" />
+      <Input label="Twitter" style={MyStyles.marginVertical} onChangeText={setTwitter} value={twitter_url} placeholder="Twitter URL" />
+      <Input label="Instagram" style={MyStyles.marginVertical} onChangeText={setInstagram} value={instagram_url} placeholder="Instagram URL" />
+      <Button style={[MyStyles.fullWidth, MyStyles.marginVertical3]} onPress={updateProfileData} accessoryLeft={btnLoading ? spinner : null}>Update</Button>
+    </Layout>
   )
 }
-
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  input: {
-    height: 35,
-    borderWidth: .5,
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    marginVertical: 10,
-    width: "80%"
-  },
-})
 
 export default EditProfile

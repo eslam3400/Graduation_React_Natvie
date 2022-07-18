@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { View, Pressable, StyleSheet } from 'react-native'
+import { Pressable, StyleSheet } from 'react-native'
+import { Layout } from '@ui-kitten/components'
 import Api from '../../Api'
 import Loading from '../../components/Loading'
 import ChipCard from '../../components/ChipCard'
@@ -42,10 +43,10 @@ function ChipsVersion({ navigation }) {
   )
 
   return (
-    <View style={style.container}>
+    <Layout style={style.container}>
       <Loading visible={loading} />
       {chips}
-    </View>
+    </Layout>
   )
 }
 

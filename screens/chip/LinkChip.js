@@ -1,7 +1,8 @@
 import React from 'react'
-import { View, TextInput, Text, Button, StyleSheet } from 'react-native'
+import { Layout, Input, Button } from '@ui-kitten/components'
 import Api from '../../Api'
 import Loading from '../../components/Loading'
+import MyStyles from '../../Styles'
 
 function LinkChip({ navigation }) {
   const [key, setKey] = React.useState("")
@@ -18,38 +19,14 @@ function LinkChip({ navigation }) {
   }
 
   return (
-    <View style={style.container}>
+    <Layout style={[MyStyles.container, MyStyles.containerPadding]}>
       <Loading visible={loading} />
-      <TextInput style={style.textBox} onChangeText={setKey} placeholder="Key" />
-      <TextInput style={style.textBox} onChangeText={setPassword} placeholder="Password" />
-      <Button
-        onPress={() => link()}
-        title="Link"
-        color="blue"
-      />
-      <Text style={{ marginVertical: 15 }}>OR</Text>
-      <Button
-        onPress={() => navigation.navigate("Chips")}
-        title="Order Device"
-        color="blue"
-      />
-    </View>
+      <Input label="Chip Key" style={MyStyles.marginVertical2} onChangeText={setKey} placeholder="Key" />
+      <Input label="Chip Password" style={MyStyles.marginVertical2} onChangeText={setPassword} placeholder="Password" />
+      <Button style={[MyStyles.marginVertical3, MyStyles.fullWidth]} onPress={() => link()}>Link</Button>
+      <Button style={MyStyles.fullWidth} appearance="outline" onPress={() => navigation.navigate("Chips")}>Order Device</Button>
+    </Layout>
   )
 }
-
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  textBox: {
-    width: "85%",
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-    marginVertical: 10
-  }
-})
 
 export default LinkChip

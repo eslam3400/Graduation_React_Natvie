@@ -1,7 +1,7 @@
 import React from 'react'
 import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components'
 import MapView from 'react-native-maps';
-import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons, Feather, FontAwesome5 } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
 import Api from '../Api';
 import MyStyles from '../Styles'
@@ -27,17 +27,24 @@ function Home({ navigation }) {
 
   const actions = [
     {
-      text: "Settings",
-      icon: <Ionicons name="settings-outline" size={26} color="black" />,
-      name: "btnSettings",
-      position: 3,
+      text: "Profile",
+      icon: <Feather name="user" size={24} color="black" />,
+      name: "btnProfile",
+      position: 5,
       color: "white"
     },
     {
-      text: "Tasks",
-      icon: <FontAwesome5 name="tasks" size={26} color="black" />,
-      name: "btnTasks",
-      position: 1,
+      text: "Link Chip",
+      icon: <Feather name="link-2" size={24} color="black" />,
+      name: "btnLinkChip",
+      position: 4,
+      color: "white"
+    },
+    {
+      text: "Chip Settings",
+      icon: <Ionicons name="settings-outline" size={26} color="black" />,
+      name: "btnSettings",
+      position: 3,
       color: "white"
     },
     {
@@ -45,6 +52,13 @@ function Home({ navigation }) {
       icon: <FontAwesome5 name="users" size={26} color="black" />,
       name: "btnUsers",
       position: 2,
+      color: "white"
+    },
+    {
+      text: "Tasks",
+      icon: <FontAwesome5 name="tasks" size={26} color="black" />,
+      name: "btnTasks",
+      position: 1,
       color: "white"
     }
   ];
@@ -59,6 +73,12 @@ function Home({ navigation }) {
         break;
       case 'btnSettings':
         navigation.navigate('ChipSettings', { id: chips[selectedIndex.row].id })
+        break;
+      case 'btnProfile':
+        navigation.navigate('Profile')
+        break;
+      case 'btnLinkChip':
+        navigation.navigate('LinkShip')
         break;
     }
   }
