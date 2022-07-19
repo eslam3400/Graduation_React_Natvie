@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Layout, Input, Button, CheckBox, Text, Spinner } from '@ui-kitten/components'
+import { TouchableWithoutFeedback } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import MyStyles from '../../Styles'
 import Api from '../../Api'
 
@@ -10,7 +12,7 @@ function AddTask({ navigation, route }) {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [area, setArea] = useState(0)
-  const [from, setFrom] = useState("12:00")
+  const [from, setFrom] = useState("")
   const [to, setTo] = useState("24:00")
   const [region, setRegion] = useState({ latitude: 31.2565102, longitude: 30.0087259, latitudeDelta: 0.04, longitudeDelta: 0.05 });
   const [marker, setMarker] = useState({ latitude: 0, longitude: 0 });
@@ -21,6 +23,20 @@ function AddTask({ navigation, route }) {
   const [we, setWe] = useState(false);
   const [th, setTh] = useState(false);
   const [fr, setFr] = useState(false);
+  const [showFrom, setShowFrom] = useState(false);
+  const [showTO, setShowTO] = useState(false);
+
+  const onChangeFrom = (event, selectedDate) => {
+    const selectedTime = new Date(selectedDate).toLocaleTimeString("it");
+    setFrom(selectedTime);
+    setShowFrom(false)
+  };
+
+  const onChangeTo = (event, selectedDate) => {
+    const selectedTime = new Date(selectedDate).toLocaleTimeString("it");
+    setTo(selectedTime);
+    setShowTO(false)
+  };
 
   const addTask = async () => {
     setLoading(true)
@@ -47,7 +63,7 @@ function AddTask({ navigation, route }) {
 
   return (
     <Layout style={MyStyles.container}>
-      <MapView style={{ width: "100%", height: "25%" }} initialRegion={region} onRegionChange={setRegion} onPress={e => setMarker(e.nativeEvent.coordinate)}>
+      <MapView style={{ width: "100%", height: "30%" }} initialRegion={region} onRegionChange={setRegion} onPress={e => setMarker(e.nativeEvent.coordinate)}>
         <Marker coordinate={marker} pinColor="blue" />
       </MapView>
       <Layout style={[MyStyles.containerPadding, MyStyles.fullWidth]}>
@@ -64,17 +80,13 @@ function AddTask({ navigation, route }) {
           onChangeText={setArea}
           placeholder='Test'
           keyboardType='decimal-pad' />
-        <Layout style={[MyStyles.row, MyStyles.marginVertical, { justifyContent: "space-between" }]}>
-          <Input label='From'
-            style={{ width: "48%" }}
-            onChangeText={setFrom}
-            placeholder='12:00'
-            keyboardType='decimal-pad' />
-          <Input label='To'
-            style={{ width: "48%" }}
-            onChangeText={setTo}
-            placeholder='24:00'
-            keyboardType='decimal-pad' />
+        <Layout style={[MyStyles.row, MyStyles.marginVertical2, { justifyContent: "space-between" }]}>
+          <TouchableWithoutFeedback onPress={() => setShowFrom(true)}>
+            <Text style={{ width: "48%", borderWidth: .5, paddingHorizontal: 13, paddingVertical: 8, borderRadius: 3, borderColor: "gray" }}>From {from}</Text>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => setShowTO(true)}>
+            <Text style={{ width: "48%", borderWidth: .5, paddingHorizontal: 13, paddingVertical: 8, borderRadius: 3, borderColor: "gray" }}>To {to}</Text>
+          </TouchableWithoutFeedback>
         </Layout>
         <Text>Repeat Days</Text>
         <Layout style={[MyStyles.row, MyStyles.fullWidth, MyStyles.marginVertical]}>
@@ -88,6 +100,24 @@ function AddTask({ navigation, route }) {
         </Layout>
         <Button style={[MyStyles.fullWidth, MyStyles.marginVertical2]} onPress={addTask} accessoryLeft={loading ? spinner : null}>Add Task</Button>
       </Layout>
+      {showFrom && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          mode="time"
+          value={new Date()}
+          is24Hour={true}
+          onChange={onChangeFrom}
+        />
+      )}
+      {showTO && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          mode="time"
+          value={new Date()}
+          is24Hour={true}
+          onChange={onChangeTo}
+        />
+      )}
     </Layout>
   )
 }
