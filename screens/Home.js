@@ -1,8 +1,9 @@
 import React from 'react'
 import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components'
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { Ionicons, Feather, FontAwesome5 } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
+import io from 'socket.io-client';
 import Api from '../Api';
 import MyStyles from '../Styles'
 import Loading from '../components/Loading'
@@ -21,9 +22,20 @@ function Home({ navigation }) {
     alert("some thing went wrong please try again later")
   }, [])
 
+  React.useEffect(() => {
+    socketRef.current = io('http://192.168.91.191:3000')
+    socketRef.current.on('location', (data) => {
+      setRegion(data)
+      console.log(data)
+    })
+    return () => socketRef.current.disconnect();
+  }, [])
+
   const [loading, setLoading] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
   const [chips, setChips] = React.useState([]);
+  const socketRef = React.useRef()
+  const [region, setRegion] = React.useState({ latitude: 0, longitude: 0, latitudeDelta: 0.04, longitudeDelta: 0.05 });
 
   const actions = [
     {
@@ -94,7 +106,9 @@ function Home({ navigation }) {
       <Select style={MyStyles.fullWidth} selectedIndex={selectedIndex} onSelect={setSelectedIndex}>
         {chips.map(e => <SelectItem key={e.id} title={e.name} />)}
       </Select>
-      <MapView style={{ width: "100%", height: "93%", zIndex: -1 }} />
+      <MapView style={{ width: "100%", height: "95%", zIndex: -1 }} initialRegion={{ latitude: 31.2686074, longitude: 30.0026114, latitudeDelta: 0.04, longitudeDelta: 0.05 }} onRegionChange={setRegion}>
+        <Marker coordinate={region} pinColor="blue" />
+      </MapView>
     </Layout >
   )
 }

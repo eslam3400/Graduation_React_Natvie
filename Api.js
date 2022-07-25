@@ -63,7 +63,7 @@ const updateChipSettings = async (data) => {
 }
 
 const getChipUsers = async (id) =>
-  await fetch(`${server}/chip-user/chip/${id}`, { method: 'GET', headers })
+  await fetch(`${server}/chip-user/users/${id}`, { method: 'GET', headers })
 
 const addUserToChip = async (data) =>
   await fetch(`${server}/chip-user/add-new-user`, { method: 'POST', headers, body: JSON.stringify(data) })

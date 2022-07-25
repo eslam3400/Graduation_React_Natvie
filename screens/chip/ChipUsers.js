@@ -22,8 +22,14 @@ const ChipUsers = ({ navigation, route }) => {
 
   const avatar = () => <Avatar size="medium" source={{ uri: "https://cdn.vox-cdn.com/thumbor/xBIBkXiGLcP-kph3pCX61U7RMPY=/0x0:1400x788/1200x800/filters:focal(588x282:812x506)/cdn.vox-cdn.com/uploads/chorus_image/image/70412073/0377c76083423a1414e4001161e0cdffb0b36e1f_760x400.0.png" }} />
 
-  const button = () => (
-    <Button onPress={() => console.log(item.id)} size='small' status='danger'>Remove</Button>
+  const removeUser = (userID) => {
+    const newUsers = users.filter(e => e.id != userID)
+    console.log(newUsers)
+    setUsers(newUsers)
+  }
+
+  const button = (id) => (
+    <Button onPress={() => removeUser(id)} size='small' status='danger'>Remove</Button>
   )
 
   const renderItem = ({ item, index }) => (
@@ -31,7 +37,7 @@ const ChipUsers = ({ navigation, route }) => {
       title={item.name}
       description={item.name}
       accessoryLeft={avatar}
-      accessoryRight={item.role !== "Controller" ? button : null}
+      accessoryRight={item.role !== "Controller" ? () => button(item.id) : null}
     />
   );
 

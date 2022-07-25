@@ -34,8 +34,8 @@ function Profile({ navigation }) {
     <Layout style={[MyStyles.container, MyStyles.containerPadding]}>
       <Loading visible={loading} />
       <Image style={style.avatar} source={{ uri: data.avatar }} />
-      <Text style={{ marginTop: 20 }} category="h4">{data.name} <TouchableWithoutFeedback style={{ paddingLeft: 10 }} onPress={() => navigation.navigate('Update Profile')}><Feather name="edit" size={24} color="black" /></TouchableWithoutFeedback></Text>
-      <Layout style={MyStyles.row}>
+      <Text style={{ marginTop: 20 }} category="h5">{data.name} <TouchableWithoutFeedback style={{ paddingLeft: 10 }} onPress={() => navigation.navigate('Update Profile')}><Feather name="edit" size={24} color="black" /></TouchableWithoutFeedback></Text>
+      <Layout style={[MyStyles.row, { marginTop: 10 }]}>
         <Text style={style.email}>{data.email}</Text>
         <Text style={style.email}> / {data.gender}</Text>
       </Layout>

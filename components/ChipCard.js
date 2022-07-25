@@ -6,10 +6,10 @@ function ChipCard({ imgSrc, name, price, description, rate, rateCount }) {
   return (
     <View style={style.card}>
       <Image style={style.cardImage} source={{ uri: imgSrc }} />
-      <View style={style.cardBody}>
+      <View style={[style.cardBody, { width: "100%" }]}>
         <Text style={style.cardBodyLabel}>Name: <Text style={style.cardBodyText}> {name}</Text></Text>
         <Text style={style.cardBodyLabel}>Price: <Text style={style.cardBodyText}> ${price}</Text></Text>
-        <Text style={style.cardBodyText}>{description}</Text>
+        <Text style={[style.cardBodyText, { flexWrap: "wrap", width: "75%" }]}>{description}</Text>
         <Text style={style.cardBodyLabel}><RatingInfo users={rateCount} rate={rate} /></Text>
       </View>
     </View>

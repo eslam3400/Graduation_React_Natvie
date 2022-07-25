@@ -11,7 +11,7 @@ function Intro({ navigation }) {
         <Text style={{ fontSize: 55, marginVertical: 10 }} status="primary">
           <Feather name="shield" size={50} color="#3366FF" /> Live Guard
         </Text>
-        <Text style={{ textAlign: "center" }}>Some bla bla about us :D</Text>
+        <Text style={{ textAlign: "center", fontStyle: "italic" }}>The Most Reliable Parental Control App</Text>
       </Layout>
       <Button style={{ marginTop: 20, width: '80%' }} size="large" onPress={() => navigation.navigate("Login")} >Login</Button>
       <Button style={{ marginTop: 10, width: '80%' }} size="large" appearance="outline" onPress={() => navigation.navigate("Signup")}>Signup</Button>

@@ -62,11 +62,11 @@ function AddTask({ navigation, route }) {
   const spinner = () => <Spinner size='large' status="info" />
 
   return (
-    <Layout style={MyStyles.container}>
-      <MapView style={{ width: "100%", height: "30%" }} initialRegion={region} onRegionChange={setRegion} onPress={e => setMarker(e.nativeEvent.coordinate)}>
+    <Layout style={[MyStyles.container, { justifyContent: "flex-start" }]}>
+      <MapView style={{ width: "100%", height: "40%" }} initialRegion={region} onRegionChange={setRegion} onPress={e => setMarker(e.nativeEvent.coordinate)}>
         <Marker coordinate={marker} pinColor="blue" />
       </MapView>
-      <Layout style={[MyStyles.containerPadding, MyStyles.fullWidth]}>
+      <Layout style={[MyStyles.containerPadding, MyStyles.fullWidth, { marginTop: 10 }]}>
         <Input label='Name'
           style={MyStyles.marginVertical}
           onChangeText={setName}

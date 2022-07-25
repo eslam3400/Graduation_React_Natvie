@@ -31,7 +31,7 @@ function ChipsVersion({ navigation }) {
         style={{ width: "90%", marginVertical: 10 }}
         key={chip.id}>
         <ChipCard
-          imgSrc={/*chip.main_image ||*/ "https://cdn.vox-cdn.com/thumbor/xBIBkXiGLcP-kph3pCX61U7RMPY=/0x0:1400x788/1200x800/filters:focal(588x282:812x506)/cdn.vox-cdn.com/uploads/chorus_image/image/70412073/0377c76083423a1414e4001161e0cdffb0b36e1f_760x400.0.png"}
+          imgSrc={"https://live-guard-app.herokuapp.com/img/chip.9a0dd998.png"}
           name={chip.name}
           price={chip.price}
           description={chip.short_description}

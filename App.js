@@ -1,5 +1,4 @@
 import 'react-native-gesture-handler';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as eva from '@eva-design/eva';
@@ -27,6 +26,7 @@ import TaskDetails from './screens/tasks/TaskDetails';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
   return (
     <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
       <NavigationContainer>

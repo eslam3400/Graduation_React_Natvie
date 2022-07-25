@@ -22,8 +22,8 @@ function TaskDetails({ navigation, route }) {
   }
 
   return (
-    <Layout style={MyStyles.container}>
-      <MapView style={{ width: "100%", height: "30%" }} region={details.region}>
+    <Layout style={[MyStyles.container, { justifyContent: "flex-start" }]}>
+      <MapView style={{ width: "100%", height: "35%" }} region={details.region}>
         <Marker coordinate={details.region} pinColor="blue" />
       </MapView>
       <Layout style={[MyStyles.containerPadding, MyStyles.fullWidth]}>
