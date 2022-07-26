@@ -12,7 +12,10 @@ function ForgetPassword({ navigation }) {
     const response = await Api.forgetPassword({ user_email: email })
     const data = await response.json()
     setLoading(false)
-    if (response.ok) return alert(data.message)
+    if (response.ok) {
+      alert(data.message)
+      return navigation.navigate("Login")
+    }
     alert("There is something went wrong please contact support!")
   }
 

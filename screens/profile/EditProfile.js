@@ -34,7 +34,8 @@ function EditProfile({ navigation }) {
       setAddress(data.address ?? "")
       setFb(data.facebook_url ?? "")
       setTwitter(data.twitter_url ?? "")
-      return setInstagram(data.instagram_url ?? "")
+      setInstagram(data.instagram_url ?? "")
+      return navigation.navigate("Profile")
     }
     alert("Something Wrong Went :(")
   }

@@ -42,30 +42,37 @@ function Profile({ navigation }) {
       <Input
         style={[MyStyles.marginVertical, { backgroundColor: "transparent", marginTop: 20 }]}
         accessoryLeft={<MaterialIcons name="description" size={24} color="black" />}
+        disabled={true}
         value={data.about} />
       <Input
         style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
         accessoryLeft={<Feather name="phone" size={24} color="black" />}
+        disabled={true}
         value={data.phone} />
       <Input
         style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
         accessoryLeft={<Entypo name="address" size={24} color="black" />}
+        disabled={true}
         value={data.address} />
       <Input
         style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
         accessoryLeft={<FontAwesome name="birthday-cake" size={24} color="black" />}
+        disabled={true}
         value={data.date_of_birth} />
       <Input
         style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
         accessoryLeft={<Entypo name="facebook" size={24} color="black" />}
+        disabled={true}
         value={data.facebook_url} />
       <Input
         style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
         accessoryLeft={<Entypo name="twitter" size={24} color="black" />}
+        disabled={true}
         value={data.twitter_url} />
       <Input
         style={[MyStyles.marginVertical, { backgroundColor: "transparent" }]}
         accessoryLeft={<Entypo name="instagram" size={24} color="black" />}
+        disabled={true}
         value={data.instagram_url} />
     </Layout>
   )

@@ -21,7 +21,10 @@ function Signup({ navigation }) {
     const response = await Api.signup({ email, name, password, phone, gender: genderText, date_of_birth })
     const data = await response.json()
     setLoading(false)
-    if (response.ok) return alert(`Nice To Have U On Board ^^ \n Please Check Ur Email For Verification`)
+    if (response.ok) {
+      alert(`Please Check Ur Email For Verification`)
+      return navigation.navigate("Login")
+    }
     if (data.errors) return alert(data.errors[0])
     alert(data.message)
   }
@@ -51,7 +54,7 @@ function Signup({ navigation }) {
         accessoryRight={showPasswordIcon}
         secureTextEntry={showPassword}
         onChangeText={setPassword}
-        placeholder='Place your Text' />
+        placeholder='***********' />
       <Input label='Phone'
         style={MyStyles.marginVertical}
         onChangeText={setPhone}

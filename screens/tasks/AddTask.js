@@ -55,7 +55,7 @@ function AddTask({ navigation, route }) {
     const chip_id = route.params.id
     const response = await Api.addTask({ name, description, lat, lng, area, start_time, end_time, repeat_id, chip_id })
     setLoading(false)
-    if (response.ok) return navigation.navigate('Home')
+    if (response.ok) return navigation.navigate('Tasks')
     alert("something wrong happened!")
   }
 
